@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Rate & Box Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 15px; background: #f4f7f6; margin: 0; }
+        .calculator { max-width: 400px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        label { font-weight: bold; margin-top: 10px; display: block; color: #444; }
+        input { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+        .result { margin-top: 20px; padding: 15px; background: #eef9f5; border-left: 5px solid #2ecc71; border-radius: 4px; }
+        .result p { margin: 8px 0; font-size: 16px; }
+        .share-btn { display: block; width: 100%; background-color: #25D366; color: white; text-align: center; padding: 12px; margin-top: 15px; border-radius: 5px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; font-size: 16px; }
+        .ad-container { width: 100%; text-align: center; margin: 15px 0; background: #e9e9e9; padding: 10px 0; border: 1px dashed #bbb; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="ad-container">
+    <span>[ Top Banner Ad Placeholder ]</span>
+</div>
+
+<div class="calculator">
+    <h2>Box & Rate Calculator</h2>
+    
+    <label>Rate per Sq. Meter (PKR):</label>
+    <input type="number" id="sqmRate" placeholder="e.g. 1500" oninput="calculate()">
+
+    <label>Sq. Meter per Box:</label>
+    <input type="number" id="sqmPerBox" placeholder="e.g. 1.44" oninput="calculate()">
+
+    <label>Total Boxes Required:</label>
+    <input type="number" id="boxes" placeholder="e.g. 10" oninput="calculate()">
+
+    <div class="result">
+        <p><strong>Rate Per Box:</strong> RS <span id="ratePerBox">0</span></p>
+        <p><strong>Total Amount:</strong> RS <span id="totalPrice">0</span></p>
+    </div>
+
+    <button class="share-btn" onclick="shareOnWhatsApp()">WhatsApp Par Share Karein</button>
+</div>
+
+<div class="ad-container">
+    <span>[ Bottom Banner Ad Placeholder ]</span>
+</div>
+
+<script>
+    function calculate() {
+        let rate = parseFloat(document.getElementById('sqmRate').value) || 0;
+        let sqmBox = parseFloat(document.getElementById('sqmPerBox').value) || 0;
+        let totalBoxes = parseFloat(document.getElementById('boxes').value) || 0;
+
+        let rateBox = rate * sqmBox;
+        let total = rateBox * totalBoxes;
+
+        document.getElementById('ratePerBox').innerText = rateBox.toFixed(2);
+        document.getElementById('totalPrice').innerText = total.toFixed(2);
+    }
+
+    function shareOnWhatsApp() {
+        let rateBox = document.getElementById('ratePerBox').innerText;
+        let totalPrice = document.getElementById('totalPrice').innerText;
+        
+        let text = `*Box & Rate Calculation Summary*\n` +
+                   `----------------------------\n` +
+                   `• Rate Per Box: RS ${rateBox}\n` +
+                   `• Total Price: RS ${totalPrice}\n\n` +
+                   `Apni calculation karne ke liye is tool ko open karein: ${window.location.href}`;
+        
+        let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+    }
+</script>
+
+</body>
+</html>
